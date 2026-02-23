@@ -1,0 +1,13 @@
+
+> app@1.0.0 test
+> jest
+
+PASS tests/unit/state.test.js
+PASS tests/unit/data.test.js
+PASS tests/integration/map_ui.test.js
+
+Test Suites: 3 passed, 3 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        2.076 s
+Ran all test suites.
