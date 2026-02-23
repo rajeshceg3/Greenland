@@ -1,0 +1,322 @@
+:root {
+    --glacier-blue: #DDEFF7;
+    --ice-shadow: #9BBED2;
+    --deep-arctic-navy: #0C1C2C;
+    --aurora-accent: #66FFCC;
+    --font-serif: 'Times New Roman', serif;
+    --font-sans: system-ui, -apple-system, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* No scroll */
+    background: var(--deep-arctic-navy);
+    font-family: var(--font-sans);
+    color: var(--glacier-blue);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Landing Screen */
+.landing-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #9BBED2, #0C1C2C);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    transition: opacity 0.8s ease;
+}
+
+.landing-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.landing-content {
+    position: relative;
+    z-index: 2;
+}
+
+.landing-title {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    font-weight: normal;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.landing-subtitle {
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    opacity: 0.8;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+}
+
+.enter-btn {
+    background: transparent;
+    border: 1px solid var(--aurora-accent);
+    color: var(--aurora-accent);
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.enter-btn:hover {
+    background: var(--aurora-accent);
+    color: var(--deep-arctic-navy);
+    box-shadow: 0 0 15px var(--aurora-accent);
+}
+
+#snow-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Map Container */
+#map {
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 1s ease;
+    filter: saturate(0.8) brightness(0.9); /* Desaturated, ice-toned */
+}
+
+#map.visible {
+    opacity: 1;
+}
+
+/* Custom Marker */
+.custom-marker {
+    background: none;
+    border: none;
+}
+
+.marker-core {
+    width: 12px;
+    height: 12px;
+    background: var(--aurora-accent);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px var(--aurora-accent);
+    z-index: 2;
+}
+
+.marker-pulse {
+    width: 24px;
+    height: 24px;
+    background: rgba(102, 255, 204, 0.3);
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: pulse 2s infinite;
+    z-index: 1;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* Glass Panel (Destination Focus) */
+.glass-panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 35vh; /* 35% height as per PRD */
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    z-index: 500;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-panel.hidden {
+    transform: translateY(110%);
+}
+
+.panel-handle {
+    width: 40px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.panel-content h2 {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.panel-content p {
+    font-size: 1rem;
+    color: var(--glacier-blue);
+    opacity: 0.8;
+    margin-bottom: 1.5rem;
+}
+
+.panel-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.action-btn {
+    flex: 1;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.2s;
+    font-weight: 500;
+}
+
+.action-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Detail Modal */
+.detail-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(12, 28, 44, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    opacity: 1;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.detail-modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.95);
+}
+
+.close-btn {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.modal-content {
+    margin-top: 3rem;
+    color: #fff;
+}
+
+.tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+    overflow-x: auto; /* Allow horizontal scroll for tabs if needed */
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    color: var(--ice-shadow);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding-bottom: 0.5rem;
+    position: relative;
+}
+
+.tab-btn.active {
+    color: var(--aurora-accent);
+}
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -0.6rem;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--aurora-accent);
+}
+
+/* Insight Toggle */
+.insight-toggle {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    z-index: 400;
+    background: rgba(12, 28, 44, 0.8);
+    border: 1px solid var(--ice-shadow);
+    color: var(--glacier-blue);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s;
+}
+
+.insight-toggle:hover {
+    background: var(--aurora-accent);
+    color: var(--deep-arctic-navy);
+}
+
+.insight-toggle.hidden {
+    display: none;
+}

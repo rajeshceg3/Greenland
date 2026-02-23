@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kalaallit — Discover Greenland</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="A serene, map-first travel application for Greenland.">
+    <meta name="theme-color" content="#0C1C2C">
+</head>
+<body>
+
+    <!-- Immersive Landing -->
+    <div id="landing-screen" class="landing-screen">
+        <canvas id="snow-canvas"></canvas>
+        <div class="landing-content">
+            <h1 class="landing-title">Kalaallit</h1>
+            <p class="landing-subtitle">Discover Greenland</p>
+            <button id="enter-btn" class="enter-btn">Enter</button>
+        </div>
+    </div>
+
+    <!-- Map Container -->
+    <div id="map"></div>
+
+    <!-- Destination Focus Mode (Bottom Sheet) -->
+    <div id="glass-panel" class="glass-panel hidden">
+        <div class="panel-handle"></div>
+        <div class="panel-content">
+            <h2 id="location-title">Location Name</h2>
+            <p id="location-desc">Short poetic descriptor.</p>
+            <div class="panel-actions">
+                <button id="explore-btn" class="action-btn">Explore</button>
+                <button id="route-btn" class="action-btn">Route</button>
+                <button id="save-btn" class="action-btn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Experience Detail Mode (Full Screen Modal) -->
+    <div id="detail-modal" class="detail-modal hidden">
+        <button id="close-modal" class="close-btn">&times;</button>
+        <div class="modal-content">
+            <h2 id="modal-title">Location Details</h2>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="overview">Overview</button>
+                <button class="tab-btn" data-tab="history">History</button>
+                <button class="tab-btn" data-tab="climate">Climate</button>
+            </div>
+            <div id="tab-content" class="tab-content">
+                <!-- Content will be injected here -->
+                <p>Overview content...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Environmental Insight Toggle -->
+    <button id="insight-toggle" class="insight-toggle hidden">❄️ Insight</button>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
