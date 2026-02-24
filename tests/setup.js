@@ -10,6 +10,10 @@ HTMLCanvasElement.prototype.getContext = jest.fn(() => ({
 // Mock requestAnimationFrame to avoid infinite loops in tests
 global.requestAnimationFrame = jest.fn();
 
+// Mock Audio
+HTMLMediaElement.prototype.play = jest.fn().mockResolvedValue();
+HTMLMediaElement.prototype.pause = jest.fn();
+
 global.L = {
     map: jest.fn(() => ({
         setView: jest.fn().mockReturnThis(),

@@ -10,6 +10,9 @@
 - **Experience Detail Mode**: Created the full-screen modal overlay with tabbed navigation (Overview, History, Climate) and GSAP transitions.
 - **Environmental Insight Mode**: Added a toggleable mode that overlays a visual representation of ice/climate data (simulated with a polygon) and applies a map filter.
 - **Offline Support**: Implemented a Service Worker (`service-worker.js`) to cache core assets for offline functionality.
+- **Data Enhancement**: Added "Best Time" and "Logistics" details to all locations.
+- **UI Improvements**: Added tabs for new data, a placeholder for ambient audio with toggle control, and a timeline slider for Insight Mode.
+- **Bug Fix**: Fixed Service Worker caching strategy to include all source modules.
 
 ### Current State
 The application is fully functional as a prototype with the core features described in the PRD implemented. The "No Scroll" architecture is enforced, and smooth transitions are in place using GSAP.

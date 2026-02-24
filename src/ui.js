@@ -17,6 +17,8 @@ export function initUI() {
     initPanelActions();
     initModalActions();
     initInsightToggle();
+    initAudioToggle();
+    initSlider();
 }
 
 function initLanding() {
@@ -30,6 +32,7 @@ function initLanding() {
             onComplete: () => {
                 landingScreen.style.display = 'none';
                 initMap();
+                document.getElementById('sound-toggle').classList.remove('hidden');
             }
         });
     });
@@ -177,15 +180,52 @@ function switchTab(tabName) {
 function initInsightToggle() {
     insightToggle.addEventListener('click', () => {
         state.isInsightActive = !state.isInsightActive;
+        const sliderContainer = document.getElementById('insight-slider-container');
 
         if (state.isInsightActive) {
             insightToggle.classList.add('active');
             insightToggle.textContent = "❄️ Active";
             activateInsightMode();
+            sliderContainer.classList.remove('hidden');
         } else {
             insightToggle.classList.remove('active');
             insightToggle.textContent = "❄️ Insight";
             deactivateInsightMode();
+            sliderContainer.classList.add('hidden');
         }
     });
+}
+
+function initAudioToggle() {
+    const audio = document.getElementById('ambient-audio');
+    const toggle = document.getElementById('sound-toggle');
+
+    toggle.addEventListener('click', () => {
+        if (!audio.currentSrc && !audio.src) {
+            console.log("No audio source available.");
+            return;
+        }
+
+        if (audio.paused) {
+            audio.play().catch(e => console.log("Audio play failed:", e));
+            toggle.textContent = "🔊 On";
+            toggle.classList.add('active');
+        } else {
+            audio.pause();
+            toggle.textContent = "🔇 Off";
+            toggle.classList.remove('active');
+        }
+    });
+}
+
+function initSlider() {
+    const slider = document.getElementById('year-slider');
+    const display = document.getElementById('year-display');
+
+    if (slider && display) {
+        slider.addEventListener('input', (e) => {
+            display.textContent = e.target.value;
+            console.log("Year changed to:", e.target.value);
+        });
+    }
 }
