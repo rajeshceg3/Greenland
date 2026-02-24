@@ -41,7 +41,7 @@ describe('Map and UI Integration', () => {
             <button id="insight-toggle" class="hidden"></button>
             <button id="sound-toggle" class="hidden"></button>
             <div id="insight-slider-container" class="hidden">
-                 <input type="range" id="year-slider">
+                 <input type="range" min="1900" max="2100" value="2023" id="year-slider">
                  <span id="year-display"></span>
             </div>
             <audio id="ambient-audio"></audio>
@@ -191,5 +191,56 @@ describe('Map and UI Integration', () => {
 
         expect(state.isDetailModalOpen).toBe(false);
         expect(document.getElementById('detail-modal').classList.contains('hidden')).toBe(true);
+    });
+
+    test('Audio toggle does nothing if no source', () => {
+        const toggle = document.getElementById('sound-toggle');
+        const audio = document.getElementById('ambient-audio');
+
+        // Ensure no src
+        Object.defineProperty(audio, 'currentSrc', { value: '', writable: true });
+        Object.defineProperty(audio, 'src', { value: '', writable: true });
+
+        console.log = jest.fn();
+
+        toggle.click();
+
+        expect(console.log).toHaveBeenCalledWith("No audio source available.");
+        expect(audio.play).not.toHaveBeenCalled();
+    });
+
+    test('Audio toggle plays and pauses audio', () => {
+        const toggle = document.getElementById('sound-toggle');
+        const audio = document.getElementById('ambient-audio');
+
+        // Mock src
+        Object.defineProperty(audio, 'currentSrc', { value: 'http://example.com/audio.mp3', writable: true });
+
+        // Test Play
+        Object.defineProperty(audio, 'paused', { value: true, writable: true });
+        toggle.click();
+
+        expect(audio.play).toHaveBeenCalled();
+        expect(toggle.classList.contains('active')).toBe(true);
+
+        // Test Pause
+        Object.defineProperty(audio, 'paused', { value: false, writable: true });
+        toggle.click();
+
+        expect(audio.pause).toHaveBeenCalled();
+        expect(toggle.classList.contains('active')).toBe(false);
+    });
+
+    test('Slider input updates display', () => {
+        const slider = document.getElementById('year-slider');
+        const display = document.getElementById('year-display');
+
+        console.log = jest.fn();
+
+        slider.value = 2050;
+        slider.dispatchEvent(new Event('input'));
+
+        expect(display.textContent).toBe('2050');
+        expect(console.log).toHaveBeenCalledWith("Year changed to:", "2050");
     });
 });
