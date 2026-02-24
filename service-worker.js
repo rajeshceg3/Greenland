@@ -3,7 +3,12 @@ const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
     '/styles.css',
-    '/app.js',
+    '/src/main.js',
+    '/src/data.js',
+    '/src/map.js',
+    '/src/state.js',
+    '/src/ui.js',
+    '/src/utils.js',
     'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
     'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
     'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js'

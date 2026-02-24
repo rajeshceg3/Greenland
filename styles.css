@@ -317,6 +317,8 @@ html, body {
     color: var(--deep-arctic-navy);
 }
 
-.insight-toggle.hidden {
+.insight-toggle.hidden,
+.sound-toggle.hidden,
+.insight-slider-container.hidden {
     display: none;
 }

@@ -32,10 +32,19 @@ describe('Map and UI Integration', () => {
                  <div class="tabs">
                     <button class="tab-btn" data-tab="overview"></button>
                     <button class="tab-btn" data-tab="history"></button>
+                    <button class="tab-btn" data-tab="climate"></button>
+                    <button class="tab-btn" data-tab="bestTime"></button>
+                    <button class="tab-btn" data-tab="logistics"></button>
                  </div>
                  <div id="tab-content"></div>
             </div>
             <button id="insight-toggle" class="hidden"></button>
+            <button id="sound-toggle" class="hidden"></button>
+            <div id="insight-slider-container" class="hidden">
+                 <input type="range" id="year-slider">
+                 <span id="year-display"></span>
+            </div>
+            <audio id="ambient-audio"></audio>
         `;
 
         // Reset state
