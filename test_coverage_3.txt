@@ -1,0 +1,41 @@
+
+> app@1.0.0 test
+> jest
+
+FAIL tests/integration/map_ui.test.js
+  ● Map and UI Integration › Activating insight mode twice reuses layer
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 1
+    Received number of calls: 0
+
+      172 |         // Assuming locations.length is 3.
+      173 |         // L.polygon should be called ONCE total.
+    > 174 |         expect(L.polygon).toHaveBeenCalledTimes(1);
+          |                           ^
+      175 |     });
+      176 | });
+      177 |
+
+      at Object.toHaveBeenCalledTimes (tests/integration/map_ui.test.js:174:27)
+
+PASS tests/unit/data.test.js
+PASS tests/unit/state.test.js
+----------|---------|----------|---------|---------|-------------------
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+----------|---------|----------|---------|---------|-------------------
+All files |   97.52 |    71.42 |   97.22 |    97.5 |
+ data.js  |     100 |      100 |     100 |     100 |
+ map.js   |     100 |       75 |     100 |     100 | 97
+ state.js |     100 |      100 |     100 |     100 |
+ ui.js    |   97.82 |       70 |     100 |    97.8 | 64-65
+ utils.js |       0 |      100 |       0 |       0 | 2
+----------|---------|----------|---------|---------|-------------------
+Jest: "global" coverage threshold for branches (80%) not met: 71.42%
+
+Test Suites: 1 failed, 2 passed, 3 total
+Tests:       1 failed, 13 passed, 14 total
+Snapshots:   0 total
+Time:        2.258 s
+Ran all test suites.

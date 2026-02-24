@@ -1,0 +1,24 @@
+
+> app@1.0.0 test
+> jest
+
+PASS tests/integration/map_ui.test.js
+PASS tests/unit/data.test.js
+PASS tests/unit/state.test.js
+----------|---------|----------|---------|---------|-----------------------------
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+----------|---------|----------|---------|---------|-----------------------------
+All files |    90.9 |    64.28 |   86.11 |   90.83 |
+ data.js  |     100 |      100 |     100 |     100 |
+ map.js   |     100 |       50 |     100 |     100 | 71-97
+ state.js |     100 |      100 |     100 |     100 |
+ ui.js    |   89.13 |       70 |   85.71 |   89.01 | 64-65,93-96,121,125,131-132
+ utils.js |       0 |      100 |       0 |       0 | 2
+----------|---------|----------|---------|---------|-----------------------------
+Jest: "global" coverage threshold for branches (80%) not met: 64.28%
+
+Test Suites: 3 passed, 3 total
+Tests:       10 passed, 10 total
+Snapshots:   0 total
+Time:        2.354 s
+Ran all test suites.

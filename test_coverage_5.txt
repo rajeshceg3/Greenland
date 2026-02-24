@@ -1,0 +1,23 @@
+
+> app@1.0.0 test
+> jest
+
+PASS tests/integration/map_ui.test.js
+PASS tests/unit/data.test.js
+PASS tests/unit/state.test.js
+----------|---------|----------|---------|---------|-------------------
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+----------|---------|----------|---------|---------|-------------------
+All files |   99.18 |    92.85 |   97.29 |   99.18 |
+ data.js  |     100 |      100 |     100 |     100 |
+ map.js   |     100 |      100 |     100 |     100 |
+ state.js |     100 |      100 |     100 |     100 |
+ ui.js    |     100 |       90 |     100 |     100 | 164
+ utils.js |       0 |      100 |       0 |       0 | 2
+----------|---------|----------|---------|---------|-------------------
+
+Test Suites: 3 passed, 3 total
+Tests:       16 passed, 16 total
+Snapshots:   0 total
+Time:        1.974 s
+Ran all test suites.

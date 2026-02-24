@@ -1,0 +1,111 @@
+
+> app@1.0.0 test
+> jest
+
+FAIL tests/e2e/navigation.spec.js
+  ● Test suite failed to run
+
+    TypeError: Class extends value undefined is not a constructor or null
+
+    > 1 | const { test, expect } = require('@playwright/test');
+        |                          ^
+      2 |
+      3 | test('Landing page loads and entering transitions to map', async ({ page }) => {
+      4 |   await page.goto('/');
+
+      at Object.<anonymous> (node_modules/playwright-core/lib/mcpBundleImpl/index.js:119:3983)
+      at Object.<anonymous> (node_modules/playwright-core/lib/mcpBundle.js:49:22)
+      at Object.<anonymous> (node_modules/playwright-core/lib/server/utils/nodePlatform.js:45:24)
+      at Object.<anonymous> (node_modules/playwright-core/lib/utils.js:56:27)
+      at Object.<anonymous> (node_modules/playwright-core/lib/server/registry/index.js:48:20)
+      at Object.<anonymous> (node_modules/playwright-core/lib/server/index.js:37:23)
+      at Object.<anonymous> (node_modules/playwright-core/lib/remote/playwrightConnection.js:24:21)
+      at Object.<anonymous> (node_modules/playwright-core/lib/remote/playwrightServer.js:24:35)
+      at Object.<anonymous> (node_modules/playwright-core/lib/androidServerImpl.js:24:31)
+      at Object.<anonymous> (node_modules/playwright-core/lib/inProcessFactory.js:24:32)
+      at Object.<anonymous> (node_modules/playwright-core/lib/inprocess.js:2:31)
+      at Object.<anonymous> (node_modules/playwright-core/index.js:32:18)
+      at Object.<anonymous> (node_modules/playwright/lib/index.js:41:33)
+      at Object.<anonymous> (node_modules/playwright/test.js:17:13)
+      at Object.<anonymous> (node_modules/@playwright/test/index.js:17:18)
+      at Object.require (tests/e2e/navigation.spec.js:1:26)
+
+FAIL tests/e2e/exploration.spec.js
+  ● Test suite failed to run
+
+    TypeError: Class extends value undefined is not a constructor or null
+
+    > 1 | const { test, expect } = require('@playwright/test');
+        |                          ^
+      2 |
+      3 | test.beforeEach(async ({ page }) => {
+      4 |     await page.goto('/');
+
+      at Object.<anonymous> (node_modules/playwright-core/lib/mcpBundleImpl/index.js:119:3983)
+      at Object.<anonymous> (node_modules/playwright-core/lib/mcpBundle.js:49:22)
+      at Object.<anonymous> (node_modules/playwright-core/lib/server/utils/nodePlatform.js:45:24)
+      at Object.<anonymous> (node_modules/playwright-core/lib/utils.js:56:27)
+      at Object.<anonymous> (node_modules/playwright-core/lib/server/registry/index.js:48:20)
+      at Object.<anonymous> (node_modules/playwright-core/lib/server/index.js:37:23)
+      at Object.<anonymous> (node_modules/playwright-core/lib/remote/playwrightConnection.js:24:21)
+      at Object.<anonymous> (node_modules/playwright-core/lib/remote/playwrightServer.js:24:35)
+      at Object.<anonymous> (node_modules/playwright-core/lib/androidServerImpl.js:24:31)
+      at Object.<anonymous> (node_modules/playwright-core/lib/inProcessFactory.js:24:32)
+      at Object.<anonymous> (node_modules/playwright-core/lib/inprocess.js:2:31)
+      at Object.<anonymous> (node_modules/playwright-core/index.js:32:18)
+      at Object.<anonymous> (node_modules/playwright/lib/index.js:41:33)
+      at Object.<anonymous> (node_modules/playwright/test.js:17:13)
+      at Object.<anonymous> (node_modules/@playwright/test/index.js:17:18)
+      at Object.require (tests/e2e/exploration.spec.js:1:26)
+
+FAIL tests/e2e/insight.spec.js
+  ● Test suite failed to run
+
+    TypeError: Class extends value undefined is not a constructor or null
+
+    > 1 | const { test, expect } = require('@playwright/test');
+        |                          ^
+      2 |
+      3 | test('Toggling insight mode', async ({ page }) => {
+      4 |     await page.goto('/');
+
+      at Object.<anonymous> (node_modules/playwright-core/lib/mcpBundleImpl/index.js:119:3983)
+      at Object.<anonymous> (node_modules/playwright-core/lib/mcpBundle.js:49:22)
+      at Object.<anonymous> (node_modules/playwright-core/lib/server/utils/nodePlatform.js:45:24)
+      at Object.<anonymous> (node_modules/playwright-core/lib/utils.js:56:27)
+      at Object.<anonymous> (node_modules/playwright-core/lib/server/registry/index.js:48:20)
+      at Object.<anonymous> (node_modules/playwright-core/lib/server/index.js:37:23)
+      at Object.<anonymous> (node_modules/playwright-core/lib/remote/playwrightConnection.js:24:21)
+      at Object.<anonymous> (node_modules/playwright-core/lib/remote/playwrightServer.js:24:35)
+      at Object.<anonymous> (node_modules/playwright-core/lib/androidServerImpl.js:24:31)
+      at Object.<anonymous> (node_modules/playwright-core/lib/inProcessFactory.js:24:32)
+      at Object.<anonymous> (node_modules/playwright-core/lib/inprocess.js:2:31)
+      at Object.<anonymous> (node_modules/playwright-core/index.js:32:18)
+      at Object.<anonymous> (node_modules/playwright/lib/index.js:41:33)
+      at Object.<anonymous> (node_modules/playwright/test.js:17:13)
+      at Object.<anonymous> (node_modules/@playwright/test/index.js:17:18)
+      at Object.require (tests/e2e/insight.spec.js:1:26)
+
+PASS tests/unit/data.test.js
+PASS tests/unit/state.test.js
+PASS tests/integration/map_ui.test.js
+----------|---------|----------|---------|---------|---------------------------------------------------------
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+----------|---------|----------|---------|---------|---------------------------------------------------------
+All files |   61.15 |     7.14 |   55.55 |   60.83 |
+ data.js  |     100 |      100 |     100 |     100 |
+ map.js   |   57.69 |        0 |   57.14 |   57.69 | 64-102
+ state.js |     100 |      100 |     100 |     100 |
+ ui.js    |   61.95 |       10 |   57.14 |   61.53 | 64-65,93-96,110,115-116,121,125,131-132,137-172,179-188
+ utils.js |       0 |      100 |       0 |       0 | 2
+----------|---------|----------|---------|---------|---------------------------------------------------------
+Jest: "global" coverage threshold for statements (80%) not met: 61.15%
+Jest: "global" coverage threshold for branches (80%) not met: 7.14%
+Jest: "global" coverage threshold for lines (80%) not met: 60.83%
+Jest: "global" coverage threshold for functions (80%) not met: 55.55%
+
+Test Suites: 3 failed, 3 passed, 6 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        3.011 s
+Ran all test suites.
