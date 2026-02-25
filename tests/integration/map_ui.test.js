@@ -105,7 +105,7 @@ describe('Map and UI Integration', () => {
     });
 
     test('Clicking a marker updates state and shows glass panel', () => {
-        initMap();
+        document.getElementById('enter-btn').click();
 
         const markerMock = L.marker.mock.results[0].value;
         const onClickHandler = markerMock.on.mock.calls.find(call => call[0] === 'click')[1];
@@ -120,7 +120,7 @@ describe('Map and UI Integration', () => {
     });
 
     test('Clicking map closes glass panel', () => {
-        initMap();
+        document.getElementById('enter-btn').click();
         // Open panel first
         const markerMock = L.marker.mock.results[0].value;
         markerMock.on.mock.calls.find(call => call[0] === 'click')[1]();
@@ -141,7 +141,7 @@ describe('Map and UI Integration', () => {
 
     test('Insight toggle activates and deactivates insight mode', () => {
          // Force init
-        initMap();
+        document.getElementById('enter-btn').click();
 
         const toggle = document.getElementById('insight-toggle');
 
@@ -181,7 +181,7 @@ describe('Map and UI Integration', () => {
     });
 
     test('Route and Save buttons trigger actions', () => {
-        initMap();
+        document.getElementById('enter-btn').click();
         global.alert = jest.fn();
         state.selectedLocation = locations[0]; // Ensure location selected for route
 
@@ -203,7 +203,7 @@ describe('Map and UI Integration', () => {
     });
 
     test('Activating insight mode twice reuses layer logic', () => {
-        initMap();
+        document.getElementById('enter-btn').click();
         const toggle = document.getElementById('insight-toggle');
 
         toggle.click(); // Activate
@@ -216,7 +216,7 @@ describe('Map and UI Integration', () => {
     });
 
     test('Deactivating insight mode without activation does nothing', () => {
-        initMap();
+        document.getElementById('enter-btn').click();
         deactivateInsightMode();
         const mapMock = L.map.mock.results[0].value;
         expect(mapMock.removeLayer).not.toHaveBeenCalled();

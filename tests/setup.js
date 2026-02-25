@@ -35,6 +35,7 @@ global.L = {
     divIcon: jest.fn(),
     polygon: jest.fn(() => ({
         addTo: jest.fn().mockReturnThis(),
+        setLatLngs: jest.fn().mockReturnThis(),
     })),
     polyline: jest.fn(() => ({
         addTo: jest.fn().mockReturnThis(),

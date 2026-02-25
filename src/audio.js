@@ -76,3 +76,11 @@ export function pauseWind() {
         isPlaying = false;
     }, 1000);
 }
+
+// For testing purposes
+export function _resetAudioState() {
+    audioCtx = null;
+    noiseNode = null;
+    gainNode = null;
+    isPlaying = false;
+}

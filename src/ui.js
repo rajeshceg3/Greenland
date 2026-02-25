@@ -33,11 +33,20 @@ function initLanding() {
             duration: 1,
             onComplete: () => {
                 landingScreen.style.display = 'none';
-                initMap();
+                initMap(handleLocationSelect);
                 document.getElementById('sound-toggle').classList.remove('hidden');
             }
         });
     });
+}
+
+function handleLocationSelect(location) {
+    if (location) {
+        updateGlassPanel(location);
+        showGlassPanel();
+    } else {
+        hideGlassPanel();
+    }
 }
 
 function initSnow() {

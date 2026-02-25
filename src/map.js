@@ -1,21 +1,25 @@
 import { state } from './state.js';
 import { locations } from './data.js';
-import { updateGlassPanel, showGlassPanel, hideGlassPanel } from './ui.js';
 
 let map;
 let insightLayer;
+let routeLayer;
+let onLocationSelectCallback;
 
 export function resetMapState() {
     map = null;
     insightLayer = null;
+    routeLayer = null;
+    onLocationSelectCallback = null;
 }
 
-export function initMap() {
+export function initMap(onLocationSelect) {
+    onLocationSelectCallback = onLocationSelect;
     const mapContainer = document.getElementById('map');
     const insightToggle = document.getElementById('insight-toggle');
 
-    mapContainer.classList.add('visible');
-    insightToggle.classList.remove('hidden');
+    if (mapContainer) mapContainer.classList.add('visible');
+    if (insightToggle) insightToggle.classList.remove('hidden');
 
     // Initialize Leaflet Map
     map = L.map('map', {
@@ -57,16 +61,21 @@ function handleMarkerClick(location, marker) {
         easeLinearity: 0.25
     });
 
-    // Show Glass Panel
-    updateGlassPanel(location);
-    showGlassPanel();
+    // Notify UI
+    if (onLocationSelectCallback) {
+        onLocationSelectCallback(location);
+    }
 
     // Add map click listener to close panel
     map.on('click', handleMapClick);
 }
 
 function handleMapClick() {
-     hideGlassPanel();
+     // Notify UI to close
+     if (onLocationSelectCallback) {
+        onLocationSelectCallback(null);
+     }
+
      map.off('click', handleMapClick);
      state.selectedLocation = null;
 }
@@ -128,11 +137,12 @@ export function updateInsightLayer(year) {
     }
 }
 
-let routeLayer;
 const startLocation = [67.0086, -50.6892]; // Kangerlussuaq
 
 export function drawRoute(destinationCoords) {
-    if (!map) return;
+    if (!map) {
+        return;
+    }
 
     if (routeLayer) {
         map.removeLayer(routeLayer);
