@@ -1,5 +1,7 @@
 🧊 PRD — “Kalaallit”
 
+**Current Status: 85% Complete**
+
 A Gold-Standard Leaflet Travel Application for Greenland
 
 
