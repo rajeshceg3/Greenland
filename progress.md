@@ -1,6 +1,27 @@
 # Progress Report
 
-## Session Update
+## Session Update 2 (Latest)
+
+### Completed Tasks
+- **Audio Experience**: Implemented a procedural wind sound generator using Web Audio API (`src/audio.js`) to create an immersive Arctic ambience without external assets.
+- **Data Expansion**: Expanded the location database to 12 curated Greenland destinations with detailed descriptions, history, climate, and logistics info (`src/data.js`).
+- **Environmental Insight Mode**: Enhanced the Insight Mode with a dynamic `updateInsightLayer` function that simulates ice sheet retreat based on the year slider (1900-2100).
+- **Route Feature**: Implemented a visual `drawRoute` function that renders a dashed, animated path from Kangerlussuaq to the selected destination using quadratic Bezier curves.
+- **Gestures & Haptics**: Added touch event listeners for "swipe down to dismiss" on the glass panel and integrated `navigator.vibrate` for tactile feedback on interactions.
+- **Styles**: Added CSS animations for the route line.
+- **Testing**: Updated and ran unit/integration tests to match new functionality (passed all tests).
+
+### Current State
+The application now meets the core requirements of Phase 1 (12 destinations) and includes significant features from Phase 2 (Climate layer simulation) and Phase 3 (Route visualization). It feels like a polished prototype. Completion: ~85%.
+
+### Next Steps (Future)
+- **Real Data**: Replace simulated ice data with real GeoJSON data if available.
+- **Expedition Planner**: Allow custom route creation (multi-stop).
+- **Aurora Forecast**: Integrate a real-time Aurora API.
+
+---
+
+## Session Update 1
 
 ### Completed Tasks
 - **Project Structure**: Initialized `index.html`, `styles.css`, and `app.js`.
@@ -13,12 +34,3 @@
 - **Data Enhancement**: Added "Best Time" and "Logistics" details to all locations.
 - **UI Improvements**: Added tabs for new data, a placeholder for ambient audio with toggle control, and a timeline slider for Insight Mode.
 - **Bug Fix**: Fixed Service Worker caching strategy to include all source modules.
-
-### Current State
-The application is fully functional as a prototype with the core features described in the PRD implemented. The "No Scroll" architecture is enforced, and smooth transitions are in place using GSAP.
-
-### Next Steps (Future)
-- Add more real-world data and locations.
-- Implement the "Route" feature.
-- Enhance the Environmental Insight Mode with real data visualization.
-- Refine mobile responsiveness and touch gestures.

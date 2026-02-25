@@ -2,7 +2,7 @@ import { locations } from '../../src/data.js';
 
 describe('Location Data', () => {
     test('Contains correct number of locations', () => {
-        expect(locations.length).toBe(3);
+        expect(locations.length).toBe(12);
     });
 
     test('Each location has required fields', () => {

@@ -20,6 +20,7 @@ global.L = {
         addLayer: jest.fn().mockReturnThis(),
         removeLayer: jest.fn().mockReturnThis(),
         flyTo: jest.fn(),
+        fitBounds: jest.fn(),
         on: jest.fn(),
         off: jest.fn(),
     })),
@@ -34,6 +35,11 @@ global.L = {
     divIcon: jest.fn(),
     polygon: jest.fn(() => ({
         addTo: jest.fn().mockReturnThis(),
+        setLatLngs: jest.fn().mockReturnThis(),
+    })),
+    polyline: jest.fn(() => ({
+        addTo: jest.fn().mockReturnThis(),
+        getBounds: jest.fn().mockReturnValue({})
     })),
 };
 

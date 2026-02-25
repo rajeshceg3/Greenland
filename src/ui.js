@@ -1,5 +1,6 @@
 import { state } from './state.js';
-import { initMap, activateInsightMode, deactivateInsightMode } from './map.js';
+import { initMap, activateInsightMode, deactivateInsightMode, updateInsightLayer, drawRoute } from './map.js';
+import { playWind, pauseWind } from './audio.js';
 
 let landingScreen, enterBtn, snowCanvas, glassPanel, detailModal, insightToggle, tabBtns, tabContent;
 
@@ -19,6 +20,7 @@ export function initUI() {
     initInsightToggle();
     initAudioToggle();
     initSlider();
+    initGestures();
 }
 
 function initLanding() {
@@ -31,11 +33,20 @@ function initLanding() {
             duration: 1,
             onComplete: () => {
                 landingScreen.style.display = 'none';
-                initMap();
+                initMap(handleLocationSelect);
                 document.getElementById('sound-toggle').classList.remove('hidden');
             }
         });
     });
+}
+
+function handleLocationSelect(location) {
+    if (location) {
+        updateGlassPanel(location);
+        showGlassPanel();
+    } else {
+        hideGlassPanel();
+    }
 }
 
 function initSnow() {
@@ -115,28 +126,35 @@ export function hideGlassPanel() {
 
 function initPanelActions() {
     document.getElementById('explore-btn').addEventListener('click', () => {
+        if (navigator.vibrate) navigator.vibrate(20);
         if (state.selectedLocation) {
             showDetailModal(state.selectedLocation);
         }
     });
 
     document.getElementById('route-btn').addEventListener('click', () => {
-        alert("Route generation not implemented in this demo.");
+        if (navigator.vibrate) navigator.vibrate(20);
+        if (state.selectedLocation) {
+            drawRoute(state.selectedLocation.coords);
+        }
     });
 
     document.getElementById('save-btn').addEventListener('click', () => {
+        if (navigator.vibrate) navigator.vibrate(50);
         alert("Location saved to favorites.");
     });
 }
 
 function initModalActions() {
     document.getElementById('close-modal').addEventListener('click', () => {
+        if (navigator.vibrate) navigator.vibrate(20);
         state.isDetailModalOpen = false;
         detailModal.classList.add('hidden');
     });
 
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+            if (navigator.vibrate) navigator.vibrate(10);
             const tabName = btn.getAttribute('data-tab');
             switchTab(tabName);
         });
@@ -197,21 +215,15 @@ function initInsightToggle() {
 }
 
 function initAudioToggle() {
-    const audio = document.getElementById('ambient-audio');
     const toggle = document.getElementById('sound-toggle');
 
     toggle.addEventListener('click', () => {
-        if (!audio.currentSrc && !audio.src) {
-            console.log("No audio source available.");
-            return;
-        }
-
-        if (audio.paused) {
-            audio.play().catch(e => console.log("Audio play failed:", e));
+        if (!toggle.classList.contains('active')) {
+            playWind();
             toggle.textContent = "🔊 On";
             toggle.classList.add('active');
         } else {
-            audio.pause();
+            pauseWind();
             toggle.textContent = "🔇 Off";
             toggle.classList.remove('active');
         }
@@ -224,8 +236,42 @@ function initSlider() {
 
     if (slider && display) {
         slider.addEventListener('input', (e) => {
-            display.textContent = e.target.value;
-            console.log("Year changed to:", e.target.value);
+            const year = parseInt(e.target.value);
+            display.textContent = year;
+            updateInsightLayer(year);
         });
     }
+}
+
+function initGestures() {
+    let startY = 0;
+    let currentY = 0;
+
+    glassPanel.addEventListener('touchstart', (e) => {
+        startY = e.touches[0].clientY;
+        glassPanel.style.transition = 'none';
+    }, { passive: true });
+
+    glassPanel.addEventListener('touchmove', (e) => {
+        currentY = e.touches[0].clientY;
+        const diff = currentY - startY;
+
+        if (diff > 0) {
+            glassPanel.style.transform = `translateY(${diff}px)`;
+        }
+    }, { passive: true });
+
+    glassPanel.addEventListener('touchend', (e) => {
+        glassPanel.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+        const diff = currentY - startY;
+
+        if (diff > 100) {
+            hideGlassPanel();
+            glassPanel.style.transform = '';
+        } else {
+            glassPanel.style.transform = '';
+        }
+        startY = 0;
+        currentY = 0;
+    });
 }
