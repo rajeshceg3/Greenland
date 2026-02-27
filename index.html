@@ -60,7 +60,20 @@
 
     <!-- Environmental Insight Toggle -->
     <button id="insight-toggle" class="insight-toggle hidden">❄️ Insight</button>
-    <button id="sound-toggle" class="insight-toggle hidden" style="right: 10rem;">🔊 Sound</button>
+    <button id="aurora-toggle" class="insight-toggle hidden" style="right: 10rem;">✨ Aurora</button>
+    <button id="sound-toggle" class="insight-toggle hidden" style="right: 18rem;">🔊 Sound</button>
+
+    <!-- Aurora Panel -->
+    <div id="aurora-panel" class="aurora-panel hidden">
+        <h3 style="margin-bottom: 0.5rem; color: #fff;">Aurora Forecast</h3>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <div id="aurora-kp" style="font-size: 2rem; font-weight: bold; color: var(--aurora-accent);">Kp 0</div>
+            <div>
+                <div id="aurora-status" style="font-size: 1.2rem; font-weight: bold;">Quiet</div>
+                <div id="aurora-time" style="font-size: 0.8rem; opacity: 0.7;">Updated: Now</div>
+            </div>
+        </div>
+    </div>
 
     <div id="insight-slider-container" class="insight-slider-container hidden" style="position: absolute; bottom: 2rem; right: 2rem; z-index: 1000; background: rgba(12, 28, 44, 0.8); padding: 1rem; border-radius: 12px; backdrop-filter: blur(5px); border: 1px solid var(--ice-shadow); color: var(--glacier-blue);">
         <label for="year-slider" style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">Glacier Timeline</label>
