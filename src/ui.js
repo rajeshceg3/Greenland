@@ -114,6 +114,11 @@ function initSnow() {
 export function updateGlassPanel(location) {
     document.getElementById('location-title').textContent = location.name;
     document.getElementById('location-desc').textContent = location.desc;
+
+    const imageEl = document.querySelector('.panel-image');
+    if (imageEl && location.image) {
+        imageEl.style.backgroundImage = `url('${location.image}')`;
+    }
 }
 
 export function showGlassPanel() {
@@ -274,4 +279,31 @@ function initGestures() {
         startY = 0;
         currentY = 0;
     });
+
+    // Pinch to close modal
+    let initialPinchDistance = 0;
+
+    detailModal.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) {
+            initialPinchDistance = Math.hypot(
+                e.touches[0].pageX - e.touches[1].pageX,
+                e.touches[0].pageY - e.touches[1].pageY
+            );
+        }
+    }, { passive: true });
+
+    detailModal.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 2 && initialPinchDistance > 0) {
+            const currentDistance = Math.hypot(
+                e.touches[0].pageX - e.touches[1].pageX,
+                e.touches[0].pageY - e.touches[1].pageY
+            );
+
+            if (currentDistance < initialPinchDistance * 0.7) { // 30% pinch
+                // Close modal
+                document.getElementById('close-modal').click();
+                initialPinchDistance = 0; // Reset
+            }
+        }
+    }, { passive: true });
 }

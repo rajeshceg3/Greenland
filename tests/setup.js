@@ -31,6 +31,7 @@ global.L = {
         addTo: jest.fn().mockReturnThis(),
         bindPopup: jest.fn().mockReturnThis(),
         on: jest.fn(),
+        getElement: jest.fn(() => document.createElement('div')),
     })),
     divIcon: jest.fn(),
     polygon: jest.fn(() => ({

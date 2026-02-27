@@ -36,6 +36,7 @@ export function initMap(onLocationSelect) {
     }).addTo(map);
 
     // Add Markers
+    const markerElements = [];
     locations.forEach(loc => {
         const marker = L.marker(loc.coords, {
             icon: L.divIcon({
@@ -43,13 +44,29 @@ export function initMap(onLocationSelect) {
                 html: `<div class="marker-pulse"></div><div class="marker-core"></div>`,
                 iconSize: [24, 24],
                 iconAnchor: [12, 12]
-            })
+            }),
+            opacity: 0 // Start hidden
         }).addTo(map);
+
+        const el = marker.getElement();
+        if (el) {
+            markerElements.push(el);
+        }
 
         marker.on('click', () => {
             handleMarkerClick(loc, marker);
         });
     });
+
+    // Stagger fade-in animation
+    if (markerElements.length > 0) {
+        gsap.to(markerElements, {
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power2.out"
+        });
+    }
 }
 
 function handleMarkerClick(location, marker) {
