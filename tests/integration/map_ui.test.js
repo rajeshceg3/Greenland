@@ -5,6 +5,7 @@ import { locations } from '../../src/data.js';
 
 describe('Map and UI Integration', () => {
     beforeEach(() => {
+        jest.useFakeTimers();
         jest.clearAllMocks();
         resetMapState();
 
@@ -76,7 +77,13 @@ describe('Map and UI Integration', () => {
                  <div id="tab-content"></div>
             </div>
             <button id="insight-toggle" class="hidden"></button>
+            <button id="aurora-toggle" class="hidden"></button>
             <button id="sound-toggle" class="hidden"></button>
+            <div id="aurora-panel" class="hidden">
+                 <div id="aurora-kp"></div>
+                 <div id="aurora-status"></div>
+                 <div id="aurora-time"></div>
+            </div>
             <div id="insight-slider-container" class="hidden">
                  <input type="range" min="1900" max="2100" value="2023" id="year-slider">
                  <span id="year-display"></span>
@@ -99,6 +106,7 @@ describe('Map and UI Integration', () => {
         const mapContainer = document.getElementById('map');
 
         enterBtn.click();
+        jest.advanceTimersByTime(600); // Fast-forward past setTimeout
 
         expect(L.map).toHaveBeenCalledWith('map', expect.any(Object));
         expect(mapContainer.classList.contains('visible')).toBe(true);
@@ -106,6 +114,7 @@ describe('Map and UI Integration', () => {
 
     test('Clicking a marker updates state and shows glass panel', () => {
         document.getElementById('enter-btn').click();
+        jest.advanceTimersByTime(600); // Fast-forward past setTimeout
 
         const markerMock = L.marker.mock.results[0].value;
         const onClickHandler = markerMock.on.mock.calls.find(call => call[0] === 'click')[1];
@@ -121,6 +130,7 @@ describe('Map and UI Integration', () => {
 
     test('Clicking map closes glass panel', () => {
         document.getElementById('enter-btn').click();
+        jest.advanceTimersByTime(600); // Fast-forward past setTimeout
         // Open panel first
         const markerMock = L.marker.mock.results[0].value;
         markerMock.on.mock.calls.find(call => call[0] === 'click')[1]();
@@ -142,6 +152,7 @@ describe('Map and UI Integration', () => {
     test('Insight toggle activates and deactivates insight mode', () => {
          // Force init
         document.getElementById('enter-btn').click();
+        jest.advanceTimersByTime(600); // Fast-forward past setTimeout
 
         const toggle = document.getElementById('insight-toggle');
 
@@ -182,6 +193,7 @@ describe('Map and UI Integration', () => {
 
     test('Route and Save buttons trigger actions', () => {
         document.getElementById('enter-btn').click();
+        jest.advanceTimersByTime(600); // Fast-forward past setTimeout
         global.alert = jest.fn();
         state.selectedLocation = locations[0]; // Ensure location selected for route
 
@@ -204,6 +216,7 @@ describe('Map and UI Integration', () => {
 
     test('Activating insight mode twice reuses layer logic', () => {
         document.getElementById('enter-btn').click();
+        jest.advanceTimersByTime(600); // Fast-forward past setTimeout
         const toggle = document.getElementById('insight-toggle');
 
         toggle.click(); // Activate
@@ -217,6 +230,7 @@ describe('Map and UI Integration', () => {
 
     test('Deactivating insight mode without activation does nothing', () => {
         document.getElementById('enter-btn').click();
+        jest.advanceTimersByTime(600); // Fast-forward past setTimeout
         deactivateInsightMode();
         const mapMock = L.map.mock.results[0].value;
         expect(mapMock.removeLayer).not.toHaveBeenCalled();
@@ -233,8 +247,17 @@ describe('Map and UI Integration', () => {
         expect(document.getElementById('detail-modal').classList.contains('hidden')).toBe(true);
     });
 
-    test('Audio toggle plays and pauses procedural audio', () => {
+    test('Audio toggle plays and pauses procedural audio', async () => {
         const toggle = document.getElementById('sound-toggle');
+
+        // Note: With the new UI update, audio might start automatically on enter.
+        // Let's reset the internal state of the module for this test.
+        const audio = await import('../../src/audio.js');
+        audio._resetAudioState();
+        jest.clearAllMocks();
+
+        // Ensure it's not active to start
+        toggle.classList.remove('active');
 
         // Test Play
         toggle.click();
@@ -254,5 +277,41 @@ describe('Map and UI Integration', () => {
         slider.dispatchEvent(new Event('input'));
 
         expect(display.textContent).toBe('2050');
+    });
+
+    test('Aurora toggle displays and updates aurora data', async () => {
+        const auroraToggle = document.getElementById('aurora-toggle');
+        const auroraPanel = document.getElementById('aurora-panel');
+
+        // Force init
+        document.getElementById('enter-btn').click();
+        jest.advanceTimersByTime(600);
+
+        // Turn on
+        auroraToggle.click();
+
+        expect(auroraToggle.classList.contains('active')).toBe(true);
+        expect(auroraPanel.classList.contains('hidden')).toBe(false);
+
+        jest.advanceTimersByTime(10);
+        expect(auroraPanel.classList.contains('visible')).toBe(true);
+
+        // Wait for fetch simulation (800ms timeout)
+        jest.advanceTimersByTime(800);
+
+        const statusElement = document.getElementById('aurora-status');
+        expect(statusElement.textContent).not.toBe('Scanning...');
+
+        // Turn off
+        auroraToggle.click();
+        expect(auroraToggle.classList.contains('active')).toBe(false);
+        expect(auroraPanel.classList.contains('visible')).toBe(false);
+
+        jest.advanceTimersByTime(500);
+        expect(auroraPanel.classList.contains('hidden')).toBe(true);
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
     });
 });

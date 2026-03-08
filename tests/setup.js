@@ -30,6 +30,7 @@ global.L = {
     marker: jest.fn(() => ({
         addTo: jest.fn().mockReturnThis(),
         bindPopup: jest.fn().mockReturnThis(),
+        bindTooltip: jest.fn().mockReturnThis(),
         on: jest.fn(),
         getElement: jest.fn(() => document.createElement('div')),
     })),
@@ -47,5 +48,8 @@ global.L = {
 global.gsap = {
     to: jest.fn((target, config) => {
         if (config.onComplete) config.onComplete();
+    }),
+    fromTo: jest.fn((target, fromConfig, toConfig) => {
+        if (toConfig && toConfig.onComplete) toConfig.onComplete();
     }),
 };
