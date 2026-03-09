@@ -18,6 +18,7 @@ export function initUI() {
     initPanelActions();
     initModalActions();
     initInsightToggle();
+    initAuroraToggle();
     initAudioToggle();
     initSlider();
     initGestures();
@@ -27,16 +28,49 @@ function initLanding() {
     initSnow();
 
     enterBtn.addEventListener('click', () => {
-        // Fade out landing
+        // Parallax and fade out landing, while fading in map
         gsap.to(landingScreen, {
             opacity: 0,
-            duration: 1,
+            scale: 1.1,
+            duration: 1.2,
+            ease: "power2.inOut",
             onComplete: () => {
                 landingScreen.style.display = 'none';
-                initMap(handleLocationSelect);
-                document.getElementById('sound-toggle').classList.remove('hidden');
             }
         });
+
+        const mapElement = document.getElementById('map');
+        gsap.fromTo(mapElement,
+            { scale: 0.95, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 1.5, ease: "power2.out", delay: 0.2 }
+        );
+
+        setTimeout(() => {
+            initMap(handleLocationSelect);
+
+            // Show toggles smoothly
+            const toggles = [
+                document.getElementById('insight-toggle'),
+                document.getElementById('aurora-toggle'),
+                document.getElementById('sound-toggle')
+            ];
+
+            toggles.forEach((t, i) => {
+                if(t) {
+                    t.classList.remove('hidden');
+                    gsap.fromTo(t, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.5, delay: i * 0.1 });
+                }
+            });
+
+            // Automatically start sound
+            const soundToggle = document.getElementById('sound-toggle');
+            if (soundToggle) {
+                playWind();
+                soundToggle.textContent = "🔊 On";
+                soundToggle.classList.add('active');
+            }
+
+        }, 500); // Wait a bit for the transition to feel right
     });
 }
 
@@ -210,13 +244,69 @@ function initInsightToggle() {
             insightToggle.textContent = "❄️ Active";
             activateInsightMode();
             sliderContainer.classList.remove('hidden');
+            gsap.fromTo(sliderContainer, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3 });
         } else {
             insightToggle.classList.remove('active');
             insightToggle.textContent = "❄️ Insight";
             deactivateInsightMode();
-            sliderContainer.classList.add('hidden');
+            gsap.to(sliderContainer, { opacity: 0, y: 20, duration: 0.3, onComplete: () => sliderContainer.classList.add('hidden') });
         }
     });
+}
+
+function initAuroraToggle() {
+    const auroraToggle = document.getElementById('aurora-toggle');
+    const auroraPanel = document.getElementById('aurora-panel');
+    let isAuroraActive = false;
+
+    if (auroraToggle && auroraPanel) {
+        auroraToggle.addEventListener('click', () => {
+            isAuroraActive = !isAuroraActive;
+
+            if (isAuroraActive) {
+                auroraToggle.classList.add('active');
+                auroraToggle.textContent = "✨ Active";
+                auroraPanel.classList.remove('hidden');
+                setTimeout(() => auroraPanel.classList.add('visible'), 10);
+
+                // Fetch mock or real data
+                updateAuroraData();
+            } else {
+                auroraToggle.classList.remove('active');
+                auroraToggle.textContent = "✨ Aurora";
+                auroraPanel.classList.remove('visible');
+                setTimeout(() => auroraPanel.classList.add('hidden'), 500); // match CSS transition
+            }
+        });
+    }
+}
+
+async function updateAuroraData() {
+    const kpElement = document.getElementById('aurora-kp');
+    const statusElement = document.getElementById('aurora-status');
+    const timeElement = document.getElementById('aurora-time');
+
+    // Simulating a fetch with a slight delay for realistic UX
+    kpElement.textContent = "Kp ...";
+    statusElement.textContent = "Scanning...";
+
+    setTimeout(() => {
+        const mockKp = (Math.random() * 4 + 2).toFixed(1); // Random Kp between 2.0 and 6.0
+        kpElement.textContent = `Kp ${mockKp}`;
+
+        if (mockKp > 5) {
+            statusElement.textContent = "Storming";
+            statusElement.style.color = "#FF6666";
+        } else if (mockKp > 3) {
+            statusElement.textContent = "Active";
+            statusElement.style.color = "#66FFCC";
+        } else {
+            statusElement.textContent = "Quiet";
+            statusElement.style.color = "#9BBED2";
+        }
+
+        timeElement.textContent = `Updated: ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+    }, 800);
 }
 
 function initAudioToggle() {

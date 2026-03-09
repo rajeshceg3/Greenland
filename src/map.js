@@ -48,6 +48,14 @@ export function initMap(onLocationSelect) {
             opacity: 0 // Start hidden
         }).addTo(map);
 
+        // Bind custom tooltip
+        marker.bindTooltip(loc.name, {
+            className: 'custom-tooltip',
+            direction: 'top',
+            offset: [0, -10],
+            opacity: 1
+        });
+
         const el = marker.getElement();
         if (el) {
             markerElements.push(el);
@@ -60,12 +68,21 @@ export function initMap(onLocationSelect) {
 
     // Stagger fade-in animation
     if (markerElements.length > 0) {
-        gsap.to(markerElements, {
-            opacity: 1,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: "power2.out"
-        });
+        gsap.fromTo(markerElements,
+            {
+                opacity: 0,
+                y: 20,
+                scale: 0.5
+            },
+            {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 0.8,
+                stagger: 0.05,
+                ease: "back.out(1.7)"
+            }
+        );
     }
 }
 
