@@ -106,7 +106,7 @@ describe('Map and UI Integration', () => {
         const mapContainer = document.getElementById('map');
 
         enterBtn.click();
-        jest.advanceTimersByTime(600); // Fast-forward past setTimeout
+        jest.advanceTimersByTime(900); // Fast-forward past setTimeout
 
         expect(L.map).toHaveBeenCalledWith('map', expect.any(Object));
         expect(mapContainer.classList.contains('visible')).toBe(true);
@@ -114,7 +114,7 @@ describe('Map and UI Integration', () => {
 
     test('Clicking a marker updates state and shows glass panel', () => {
         document.getElementById('enter-btn').click();
-        jest.advanceTimersByTime(600); // Fast-forward past setTimeout
+        jest.advanceTimersByTime(900); // Fast-forward past setTimeout
 
         const markerMock = L.marker.mock.results[0].value;
         const onClickHandler = markerMock.on.mock.calls.find(call => call[0] === 'click')[1];
@@ -130,7 +130,7 @@ describe('Map and UI Integration', () => {
 
     test('Clicking map closes glass panel', () => {
         document.getElementById('enter-btn').click();
-        jest.advanceTimersByTime(600); // Fast-forward past setTimeout
+        jest.advanceTimersByTime(900); // Fast-forward past setTimeout
         // Open panel first
         const markerMock = L.marker.mock.results[0].value;
         markerMock.on.mock.calls.find(call => call[0] === 'click')[1]();
@@ -152,7 +152,7 @@ describe('Map and UI Integration', () => {
     test('Insight toggle activates and deactivates insight mode', () => {
          // Force init
         document.getElementById('enter-btn').click();
-        jest.advanceTimersByTime(600); // Fast-forward past setTimeout
+        jest.advanceTimersByTime(900); // Fast-forward past setTimeout
 
         const toggle = document.getElementById('insight-toggle');
 
@@ -193,7 +193,7 @@ describe('Map and UI Integration', () => {
 
     test('Route and Save buttons trigger actions', () => {
         document.getElementById('enter-btn').click();
-        jest.advanceTimersByTime(600); // Fast-forward past setTimeout
+        jest.advanceTimersByTime(900); // Fast-forward past setTimeout
         global.alert = jest.fn();
         state.selectedLocation = locations[0]; // Ensure location selected for route
 
@@ -216,7 +216,7 @@ describe('Map and UI Integration', () => {
 
     test('Activating insight mode twice reuses layer logic', () => {
         document.getElementById('enter-btn').click();
-        jest.advanceTimersByTime(600); // Fast-forward past setTimeout
+        jest.advanceTimersByTime(900); // Fast-forward past setTimeout
         const toggle = document.getElementById('insight-toggle');
 
         toggle.click(); // Activate
@@ -230,7 +230,7 @@ describe('Map and UI Integration', () => {
 
     test('Deactivating insight mode without activation does nothing', () => {
         document.getElementById('enter-btn').click();
-        jest.advanceTimersByTime(600); // Fast-forward past setTimeout
+        jest.advanceTimersByTime(900); // Fast-forward past setTimeout
         deactivateInsightMode();
         const mapMock = L.map.mock.results[0].value;
         expect(mapMock.removeLayer).not.toHaveBeenCalled();
@@ -285,7 +285,7 @@ describe('Map and UI Integration', () => {
 
         // Force init
         document.getElementById('enter-btn').click();
-        jest.advanceTimersByTime(600);
+        jest.advanceTimersByTime(900);
 
         // Turn on
         auroraToggle.click();

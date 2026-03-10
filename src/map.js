@@ -21,19 +21,29 @@ export function initMap(onLocationSelect) {
     if (mapContainer) mapContainer.classList.add('visible');
     if (insightToggle) insightToggle.classList.remove('hidden');
 
-    // Initialize Leaflet Map
+    // Initialize Leaflet Map (starts zoomed out for cinematic entry)
     map = L.map('map', {
         zoomControl: false,
         attributionControl: false,
-        minZoom: 3
-    }).setView([68.0, -40.0], 4);
+        minZoom: 3,
+        zoomAnimation: true
+    }).setView([80.0, -40.0], 3); // Start further north and zoomed out
 
     // Custom Tile Layer
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
-        maxZoom: 19
+        maxZoom: 19,
+        className: 'map-tiles'
     }).addTo(map);
+
+    // Cinematic fly-in
+    setTimeout(() => {
+        map.flyTo([68.0, -40.0], 4, {
+            duration: 4,
+            easeLinearity: 0.1
+        });
+    }, 500);
 
     // Add Markers
     const markerElements = [];
@@ -66,21 +76,22 @@ export function initMap(onLocationSelect) {
         });
     });
 
-    // Stagger fade-in animation
+    // Stagger fade-in animation (delayed to sync with flyTo)
     if (markerElements.length > 0) {
         gsap.fromTo(markerElements,
             {
                 opacity: 0,
-                y: 20,
-                scale: 0.5
+                y: 30,
+                scale: 0.3
             },
             {
                 opacity: 1,
                 y: 0,
                 scale: 1,
-                duration: 0.8,
-                stagger: 0.05,
-                ease: "back.out(1.7)"
+                duration: 1.2,
+                stagger: 0.08,
+                ease: "elastic.out(1, 0.7)",
+                delay: 2.5 // Wait for map to settle slightly
             }
         );
     }
@@ -89,10 +100,16 @@ export function initMap(onLocationSelect) {
 function handleMarkerClick(location, marker) {
     state.selectedLocation = location;
 
-    // Zoom to location
-    map.flyTo(location.coords, 8, {
+    // Smooth, cinematic pan to location, slightly offset to accommodate the bottom panel
+    const lat = location.coords[0];
+    const lng = location.coords[1];
+
+    // Offset the center so the marker is visible above the panel
+    const offsetLat = lat - 1.5;
+
+    map.flyTo([offsetLat, lng], 7, {
         duration: 2.5,
-        easeLinearity: 0.25
+        easeLinearity: 0.15
     });
 
     // Notify UI

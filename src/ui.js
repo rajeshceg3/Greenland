@@ -28,10 +28,11 @@ function initLanding() {
     initSnow();
 
     enterBtn.addEventListener('click', () => {
-        // Parallax and fade out landing, while fading in map
+        // Cinematic Parallax: blur out and scale up the landing
         gsap.to(landingScreen, {
             opacity: 0,
-            scale: 1.1,
+            scale: 1.15,
+            filter: "blur(10px)",
             duration: 2.5,
             ease: "power3.inOut",
             onComplete: () => {
@@ -40,10 +41,8 @@ function initLanding() {
         });
 
         const mapElement = document.getElementById('map');
-        gsap.fromTo(mapElement,
-            { scale: 0.95, opacity: 0 },
-            { scale: 1, opacity: 1, duration: 1.5, ease: "power2.out", delay: 0.2 }
-        );
+
+        // Map elements cinematic entry happens via CSS classes and map.js init Map
 
         setTimeout(() => {
             initMap(handleLocationSelect);
@@ -52,7 +51,7 @@ function initLanding() {
             const controlsContainer = document.getElementById('controls-container');
             if (controlsContainer) {
                 controlsContainer.classList.remove('hidden');
-                gsap.fromTo(controlsContainer, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.5 });
+                gsap.fromTo(controlsContainer, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 1.2, ease: "power3.out", delay: 1 });
             }
 
             const toggles = [
@@ -75,7 +74,7 @@ function initLanding() {
                 soundToggle.classList.add('active');
             }
 
-        }, 500); // Wait a bit for the transition to feel right
+        }, 800); // Wait for the landing transition to almost finish
     });
 }
 
@@ -164,10 +163,11 @@ export function showGlassPanel() {
     const panelImage = document.querySelector('.panel-image');
     if (panelImage) {
         gsap.fromTo(panelImage,
-            { scale: 1.05, opacity: 0 },
-            { scale: 1, opacity: 1, duration: 1.5, ease: "power2.out" }
+            { scale: 1.1, opacity: 0, filter: "blur(5px)" },
+            { scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "power3.out" }
         );
     }
+    // Spring physics like feel for panel revealing handled by css cubic-bezier
     glassPanel.classList.remove('hidden');
 }
 
