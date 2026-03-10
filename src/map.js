@@ -91,7 +91,7 @@ function handleMarkerClick(location, marker) {
 
     // Zoom to location
     map.flyTo(location.coords, 8, {
-        duration: 1.5,
+        duration: 2.5,
         easeLinearity: 0.25
     });
 

@@ -32,8 +32,8 @@ function initLanding() {
         gsap.to(landingScreen, {
             opacity: 0,
             scale: 1.1,
-            duration: 1.2,
-            ease: "power2.inOut",
+            duration: 2.5,
+            ease: "power3.inOut",
             onComplete: () => {
                 landingScreen.style.display = 'none';
             }
@@ -49,16 +49,21 @@ function initLanding() {
             initMap(handleLocationSelect);
 
             // Show toggles smoothly
+            const controlsContainer = document.getElementById('controls-container');
+            if (controlsContainer) {
+                controlsContainer.classList.remove('hidden');
+                gsap.fromTo(controlsContainer, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.5 });
+            }
+
             const toggles = [
                 document.getElementById('insight-toggle'),
                 document.getElementById('aurora-toggle'),
                 document.getElementById('sound-toggle')
             ];
 
-            toggles.forEach((t, i) => {
+            toggles.forEach((t) => {
                 if(t) {
                     t.classList.remove('hidden');
-                    gsap.fromTo(t, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.5, delay: i * 0.1 });
                 }
             });
 
@@ -156,6 +161,13 @@ export function updateGlassPanel(location) {
 }
 
 export function showGlassPanel() {
+    const panelImage = document.querySelector('.panel-image');
+    if (panelImage) {
+        gsap.fromTo(panelImage,
+            { scale: 1.05, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 1.5, ease: "power2.out" }
+        );
+    }
     glassPanel.classList.remove('hidden');
 }
 

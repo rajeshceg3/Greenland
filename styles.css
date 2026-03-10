@@ -32,7 +32,7 @@ html, body {
     height: 100%;
     background: linear-gradient(to bottom, #9BBED2, #0C1C2C, #0C1C2C);
     background-size: 100% 200%;
-    animation: auroraGlow 10s ease-in-out infinite alternate;
+    animation: auroraGlow 30s ease-in-out infinite alternate;
     z-index: 1000;
     display: flex;
     justify-content: center;
@@ -66,10 +66,10 @@ html, body {
     font-family: var(--font-serif);
     font-size: 3rem;
     font-weight: normal;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.2em;
     margin-bottom: 0.5rem;
     color: #fff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 .landing-subtitle {
@@ -82,21 +82,37 @@ html, body {
 
 .enter-btn {
     background: transparent;
-    border: 1px solid var(--aurora-accent);
+    border: none;
     color: var(--aurora-accent);
-    padding: 0.8rem 2rem;
+    padding: 0.5rem;
     font-size: 1rem;
     cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.2em;
     transition: all 0.3s ease;
-    border-radius: 2px;
+    position: relative;
+}
+
+.enter-btn::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--aurora-accent);
+    transition: all 0.4s ease;
+    transform: translateX(-50%);
+    box-shadow: 0 0 5px var(--aurora-accent);
+}
+
+.enter-btn:hover::after {
+    width: 100%;
 }
 
 .enter-btn:hover {
-    background: var(--aurora-accent);
-    color: var(--deep-arctic-navy);
-    box-shadow: 0 0 15px var(--aurora-accent);
+    color: #fff;
+    text-shadow: 0 0 10px var(--aurora-accent);
 }
 
 #snow-canvas {
@@ -137,9 +153,9 @@ html, body {
 }
 
 .marker-core {
-    width: 12px;
-    height: 12px;
-    background: var(--aurora-accent);
+    width: 8px;
+    height: 8px;
+    background: #fff;
     border-radius: 50%;
     position: absolute;
     top: 50%;
@@ -162,12 +178,12 @@ html, body {
     position: absolute;
     top: 0;
     left: 0;
-    animation: pulse 2s infinite;
+    animation: pulse 4s infinite;
     z-index: 1;
 }
 
 .custom-marker:hover .marker-pulse {
-    animation: pulse 1s infinite;
+    animation: pulse 2s infinite;
     background: rgba(102, 255, 204, 0.5);
 }
 
@@ -185,16 +201,16 @@ html, body {
 /* Custom Tooltip */
 .leaflet-tooltip.custom-tooltip {
     background: rgba(12, 28, 44, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: none;
     color: #fff;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     border-radius: 8px;
-    padding: 8px 12px;
+    padding: 10px 16px;
     font-family: var(--font-sans);
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 400;
     pointer-events: none;
 }
 .leaflet-tooltip.custom-tooltip::before {
@@ -208,9 +224,9 @@ html, body {
     left: 0;
     width: 100%;
     height: 60vh; /* Increased for hero image */
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(12, 28, 44, 0.4);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
     border-top-left-radius: 24px;
     border-top-right-radius: 24px;
     z-index: 500;
@@ -219,7 +235,7 @@ html, body {
     flex-direction: column;
     justify-content: flex-start;
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .panel-image {
@@ -272,17 +288,18 @@ html, body {
 .action-btn {
     flex: 1;
     padding: 0.8rem;
-    background: rgba(255, 255, 255, 0.1);
+    background: transparent;
     border: none;
     color: #fff;
     cursor: pointer;
     border-radius: 8px;
-    transition: background 0.2s;
+    transition: all 0.2s;
     font-weight: 500;
 }
 
 .action-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+    color: var(--aurora-accent);
+    background: transparent;
 }
 
 /* Detail Modal */
@@ -292,8 +309,9 @@ html, body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(12, 28, 44, 0.95);
-    backdrop-filter: blur(10px);
+    background: rgba(12, 28, 44, 0.7);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
     z-index: 2000;
     display: flex;
     flex-direction: column;
@@ -353,24 +371,45 @@ html, body {
     bottom: -0.6rem;
     left: 0;
     width: 100%;
-    height: 2px;
+    height: 1px;
     background: var(--aurora-accent);
 }
 
+.modal-content p {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
 /* Insight Toggle */
-.insight-toggle {
+.controls-container {
     position: absolute;
     top: 2rem;
     right: 2rem;
     z-index: 400;
-    background: rgba(12, 28, 44, 0.8);
-    border: 1px solid var(--ice-shadow);
+    display: flex;
+    gap: 0.5rem;
+    background: rgba(12, 28, 44, 0.4);
+    padding: 0.5rem;
+    border-radius: 30px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.5s ease;
+}
+
+.controls-container.hidden {
+    display: none;
+}
+
+.insight-toggle {
+    background: transparent;
+    border: none;
     color: var(--glacier-blue);
     padding: 0.5rem 1rem;
     border-radius: 20px;
     cursor: pointer;
-    backdrop-filter: blur(5px);
     transition: all 0.3s;
+    font-size: 0.9rem;
 }
 
 /* Aurora Panel */
