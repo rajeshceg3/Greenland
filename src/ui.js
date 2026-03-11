@@ -40,9 +40,17 @@ function initLanding() {
         });
 
         const mapElement = document.getElementById('map');
+        // Dramatic un-blur and scale-down transition for the map
         gsap.fromTo(mapElement,
-            { scale: 0.95, opacity: 0 },
-            { scale: 1, opacity: 1, duration: 1.5, ease: "power2.out", delay: 0.2 }
+            { scale: 1.1, opacity: 0, filter: "blur(10px) saturate(0.8) brightness(0.9)" },
+            {
+                scale: 1,
+                opacity: 1,
+                filter: "blur(0px) saturate(0.8) brightness(0.9)",
+                duration: 2.0,
+                ease: "power2.out",
+                delay: 0.2
+            }
         );
 
         setTimeout(() => {
@@ -169,10 +177,30 @@ export function showGlassPanel() {
         );
     }
     glassPanel.classList.remove('hidden');
+
+    // Blur map to increase focus on the panel
+    const mapElement = document.getElementById('map');
+    if (mapElement) {
+        gsap.to(mapElement, {
+            filter: "blur(4px) saturate(0.6) brightness(0.7)",
+            duration: 0.5,
+            ease: "power2.out"
+        });
+    }
 }
 
 export function hideGlassPanel() {
     glassPanel.classList.add('hidden');
+
+    // Restore map focus
+    const mapElement = document.getElementById('map');
+    if (mapElement) {
+        gsap.to(mapElement, {
+            filter: "blur(0px) saturate(0.8) brightness(0.9)",
+            duration: 0.5,
+            ease: "power2.out"
+        });
+    }
 }
 
 function initPanelActions() {
