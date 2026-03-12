@@ -28,8 +28,8 @@ export function initMap(onLocationSelect) {
         minZoom: 3
     }).setView([68.0, -40.0], 4);
 
-    // Custom Tile Layer
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    // Custom Tile Layer - Dark Theme for Arctic Night
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
         maxZoom: 19
