@@ -220,7 +220,7 @@ function initPanelActions() {
 
     document.getElementById('save-btn').addEventListener('click', () => {
         if (navigator.vibrate) navigator.vibrate(50);
-        alert("Location saved to favorites.");
+        document.getElementById('save-status').textContent = "Nothing was saved. Favorites are not available here yet. Keep this location open or copy its name until private saving is added.";
     });
 }
 

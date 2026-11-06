@@ -61,7 +61,7 @@ describe('Map and UI Integration', () => {
                 <div class="panel-actions">
                      <button id="explore-btn">Explore</button>
                      <button id="route-btn">Route</button>
-                     <button id="save-btn">Save</button>
+                     <button id="save-btn">About saving</button><p id="save-status" role="status"></p>
                 </div>
             </div>
             <div id="detail-modal" class="hidden">
@@ -201,7 +201,8 @@ describe('Map and UI Integration', () => {
         expect(L.polyline).toHaveBeenCalled(); // Route drawn
 
         document.getElementById('save-btn').click();
-        expect(global.alert).toHaveBeenCalledWith(expect.stringContaining("Location saved"));
+        expect(document.getElementById('save-status').textContent).toContain("Nothing was saved.");
+        expect(global.alert).not.toHaveBeenCalled();
     });
 
     test('Close modal button hides modal', () => {
