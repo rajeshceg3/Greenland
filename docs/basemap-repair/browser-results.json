@@ -14,7 +14,7 @@
   {
     "width": 844,
     "passed": true,
-    "tileRequestsStubbed": 62,
+    "tileRequestsStubbed": 59,
     "checks": "stubbed only;credit visible/hittable/clear controls;marker/aboutsaving/explore/history/close;overflow/noerrors"
   },
   {

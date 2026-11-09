@@ -13,3 +13,7 @@ Current public CARTO requests returned HTTP200256px images reading API KEY REQUI
 ## CI qualification repair
 
 First PR CI failed before browser tests because ubuntu-latest resolved to26.04, unsupported by locked Playwright1.58.2. Pin ubuntu-24.04 without changing permissions, secrets or schedules. Legacy e2e fixture intercepts every OSM tile request, including navigation/insight tests. Local server isolated on4197: earlier8080 reuse reached another app, not a product failure. Four legacy browser tests pass with installed Chrome. Real map pixels remain a separate manual-browser gate.
+
+## Scrolled-viewport follow-up
+
+PR13 passed CI and reached production as5e54c0855a7c8adb7c4e37c378d7ee6f385d3d7e. Ten runtime files matched source bytes; four hosted tile-stubbed flows passed. Actual phone pixels then exposed page scroll moving absolute controls under fixed attribution. Anchor controls to the viewport instead. The browser regression now deliberately scrolls58px before checking visible controls and attribution separation at all four widths. This contains the overlap without claiming to fix the app's broader geometric overflow.

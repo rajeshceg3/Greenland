@@ -6,3 +6,5 @@ test('OSM normal endpoint, visible licence credit, no old keyless provider',()=>
 test('marker effects leave Leaflet root translation alone',()=>{
  const map=fs.readFileSync('src/map.js','utf8');const css=fs.readFileSync('styles.css','utf8');expect(map).toContain("el.querySelector('.marker-core')");expect(map).not.toContain('markerElements.push(el)');expect(css).not.toMatch(/\.custom-marker:hover\s*\{[^}]*transform:/);
 });
+
+ test("controls remain viewport anchored when page scrolls",()=>{expect(fs.readFileSync("styles.css","utf8")).toMatch(/\.controls-container\s*\{\s*position:\s*fixed/)});
