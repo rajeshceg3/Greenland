@@ -143,13 +143,11 @@ html, body {
     background: none;
     border: none;
     opacity: 0; /* Start hidden for stagger animation */
-    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: opacity 0.3s ease;
     cursor: pointer;
 }
 
-.custom-marker:hover {
-    transform: scale(1.3) !important;
-}
+/* Keep Leaflet-owned root translation unchanged on hover. */
 
 .marker-core {
     width: 8px;
@@ -462,3 +460,11 @@ html, body {
         stroke-dashoffset: -1000;
     }
 }
+
+/* Required map licence credit remains visible, not hidden under Reference. */
+.map-credit{position:fixed;top:8px;left:8px;z-index:1100;max-width:calc(100vw - 16px);padding:6px 9px;background:#f7f5ef;color:#24313d;border-radius:5px;font:12px/1.5 system-ui,sans-serif}
+.map-credit a{color:#123f56;text-decoration:underline;text-underline-offset:2px}
+.map-credit a:focus-visible{outline:3px solid #123f56;outline-offset:3px}
+.map-credit.hidden{display:none}
+
+@media(max-width:600px){.controls-container{top:50px;right:12px}}

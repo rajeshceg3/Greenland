@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kalaallit-v1';
+const CACHE_NAME = 'kalaallit-map-v2';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
