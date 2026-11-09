@@ -28,12 +28,14 @@ export function initMap(onLocationSelect) {
         minZoom: 3
     }).setView([68.0, -40.0], 4);
 
-    // Custom Tile Layer - Dark Theme for Arctic Night
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
+    // Standard OSM raster tiles: normal browser caching, no prefetch/offline tile download.
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 19
     }).addTo(map);
+
+    // Attribution is outside the filtered map and stays visible above destination panels.
+    document.getElementById('map-credit')?.classList.remove('hidden');
 
     // Add Markers
     const markerElements = [];
@@ -58,7 +60,9 @@ export function initMap(onLocationSelect) {
 
         const el = marker.getElement();
         if (el) {
-            markerElements.push(el);
+            el.style.opacity = '1';
+            const core = el.querySelector('.marker-core');
+            if (core) markerElements.push(core);
         }
 
         marker.on('click', () => {
@@ -71,12 +75,10 @@ export function initMap(onLocationSelect) {
         gsap.fromTo(markerElements,
             {
                 opacity: 0,
-                y: 20,
                 scale: 0.5
             },
             {
                 opacity: 1,
-                y: 0,
                 scale: 1,
                 duration: 0.8,
                 stagger: 0.05,

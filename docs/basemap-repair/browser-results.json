@@ -1,0 +1,26 @@
+[
+  {
+    "width": 320,
+    "passed": true,
+    "tileRequestsStubbed": 56,
+    "checks": "stubbed only;credit visible/hittable/clear controls;marker/aboutsaving/explore/history/close;overflow/noerrors"
+  },
+  {
+    "width": 390,
+    "passed": true,
+    "tileRequestsStubbed": 68,
+    "checks": "stubbed only;credit visible/hittable/clear controls;marker/aboutsaving/explore/history/close;overflow/noerrors"
+  },
+  {
+    "width": 844,
+    "passed": true,
+    "tileRequestsStubbed": 62,
+    "checks": "stubbed only;credit visible/hittable/clear controls;marker/aboutsaving/explore/history/close;overflow/noerrors"
+  },
+  {
+    "width": 1320,
+    "passed": true,
+    "tileRequestsStubbed": 120,
+    "checks": "stubbed only;credit visible/hittable/clear controls;marker/aboutsaving/explore/history/close;overflow/noerrors"
+  }
+]
