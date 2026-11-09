@@ -1,4 +1,4 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('./fixtures');
 
 test('Landing page loads and entering transitions to map', async ({ page }) => {
   await page.goto('/');

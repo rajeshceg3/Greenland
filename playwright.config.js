@@ -9,7 +9,8 @@ module.exports = defineConfig({
   reporter: 'html',
   use: {
     trace: 'on-first-retry',
-    baseURL: 'http://localhost:8080',
+    ...(process.env.CHROME_PATH ? {launchOptions:{executablePath:process.env.CHROME_PATH}} : {}),
+    baseURL: 'http://localhost:4197',
   },
   projects: [
     {
@@ -18,8 +19,8 @@ module.exports = defineConfig({
     },
   ],
   webServer: {
-    command: 'npx http-server -p 8080',
-    port: 8080,
+    command: 'npx http-server -p 4197',
+    port: 4197,
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
   },

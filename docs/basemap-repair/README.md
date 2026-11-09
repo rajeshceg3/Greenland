@@ -9,3 +9,7 @@ Current public CARTO requests returned HTTP200256px images reading API KEY REQUI
 - Automated browser QA uses synthetic SVG tiles by interception, never hits live OSM tile servers or downloads/prefetches map areas.320/390/844/1320: attribution visible/hittable and clear of controls; actual pin click/About saving/Explore/History/Close; zero page errors. Map transform can expand document geometric extents while clipped by the existing page; no claim of whole-app overflow acceptance.
 - Stubbed screenshots prove chrome/pin placement only, NOT geographic map pixels. Real-map screenshot, exact production bytes and final current deployment still required.
 - Existing broader problems remain out of scope: fictional route curve is not directions, Aurora/ice models are not live forecasts, travel/photo data not freshly validated, favorites are not saved, full-app accessibility/performance/design not accepted.
+
+## CI qualification repair
+
+First PR CI failed before browser tests because ubuntu-latest resolved to26.04, unsupported by locked Playwright1.58.2. Pin ubuntu-24.04 without changing permissions, secrets or schedules. Legacy e2e fixture intercepts every OSM tile request, including navigation/insight tests. Local server isolated on4197: earlier8080 reuse reached another app, not a product failure. Four legacy browser tests pass with installed Chrome. Real map pixels remain a separate manual-browser gate.
